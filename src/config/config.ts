@@ -9,12 +9,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 class Config {
   
   protected config: any
+  protected configPaths: { pathToEnv: string, pathToConfigDir: string }
+
   
-  constructor(pathToEnvFile: string) {
-    if (!pathToEnvFile) {
+  constructor(configPaths: { pathToEnv: string, pathToConfigDir: string }) {
+    if (!configPaths) {
       throw new Error('Config constructor must have a path argument')
     }
-    dotenv.config({ path: pathToEnvFile })
+    this.configPaths = configPaths
     this.config = this.loadConfig()
   }
 
@@ -33,10 +35,11 @@ class Config {
   }
 
   protected loadConfig() {
-    const dir = fs.readdirSync(path.resolve(__dirname, '../../config'))
+    dotenv.config({ path: this.configPaths.pathToEnv })
+    const dir = fs.readdirSync(this.configPaths.pathToConfigDir)
 
     if (dir.find(file => file === 'config.json')) {
-      const json = fs.readFileSync(path.resolve(__dirname, '../../config/config.json'), 'utf8')
+      const json = fs.readFileSync(path.resolve(this.configPaths.pathToConfigDir, 'config.json'), 'utf8')
       return JSON.parse(json)
     }
 
