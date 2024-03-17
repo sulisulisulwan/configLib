@@ -1,6 +1,13 @@
 declare class Config {
     protected config: any;
-    constructor(pathToEnvFile: string);
+    protected configPaths: {
+        pathToEnv: string;
+        pathToConfigDir: string;
+    };
+    constructor(configPaths: {
+        pathToEnv: string;
+        pathToConfigDir: string;
+    });
     getField(field: string | string[]): any;
     protected loadConfig(): any;
 }

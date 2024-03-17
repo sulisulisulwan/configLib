@@ -1,14 +1,12 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-var __dirname = path.dirname(fileURLToPath(import.meta.url));
 var Config = /** @class */ (function () {
-    function Config(pathToEnvFile) {
-        if (!pathToEnvFile) {
+    function Config(configPaths) {
+        if (!configPaths) {
             throw new Error('Config constructor must have a path argument');
         }
-        dotenv.config({ path: pathToEnvFile });
+        this.configPaths = configPaths;
         this.config = this.loadConfig();
     }
     Config.prototype.getField = function (field) {
@@ -22,9 +20,10 @@ var Config = /** @class */ (function () {
         return level;
     };
     Config.prototype.loadConfig = function () {
-        var dir = fs.readdirSync(path.resolve(__dirname, '../../config'));
+        dotenv.config({ path: this.configPaths.pathToEnv });
+        var dir = fs.readdirSync(this.configPaths.pathToConfigDir);
         if (dir.find(function (file) { return file === 'config.json'; })) {
-            var json = fs.readFileSync(path.resolve(__dirname, '../../config/config.json'), 'utf8');
+            var json = fs.readFileSync(path.resolve(this.configPaths.pathToConfigDir, 'config.json'), 'utf8');
             return JSON.parse(json);
         }
         var config = {
