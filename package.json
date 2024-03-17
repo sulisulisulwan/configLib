@@ -1,0 +1,19 @@
+{
+  "name": "configlib",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "./build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --skipLibCheck"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.28"
+  }
+}
