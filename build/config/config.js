@@ -5,8 +5,10 @@ import { fileURLToPath } from 'url';
 var __dirname = path.dirname(fileURLToPath(import.meta.url));
 var Config = /** @class */ (function () {
     function Config(pathToEnvFile) {
-        pathToEnvFile ? pathToEnvFile : '../../.env';
-        dotenv.config({ path: path.resolve(__dirname, pathToEnvFile) });
+        if (!pathToEnvFile) {
+            throw new Error('Config constructor must have a path argument');
+        }
+        dotenv.config({ path: pathToEnvFile });
         this.config = this.loadConfig();
     }
     Config.prototype.getField = function (field) {

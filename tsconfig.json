@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "declaration": true,
     "rootDir": "src",
     "outDir": "build",
     "noImplicitAny": true,

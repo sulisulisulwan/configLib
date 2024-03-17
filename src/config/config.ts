@@ -11,8 +11,10 @@ class Config {
   protected config: any
   
   constructor(pathToEnvFile: string) {
-    pathToEnvFile ? pathToEnvFile : '../../.env'
-    dotenv.config({ path: path.resolve(__dirname, pathToEnvFile) })
+    if (!pathToEnvFile) {
+      throw new Error('Config constructor must have a path argument')
+    }
+    dotenv.config({ path: pathToEnvFile })
     this.config = this.loadConfig()
   }
 
